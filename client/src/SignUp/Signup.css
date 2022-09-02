@@ -1,0 +1,102 @@
+body{
+    background-color: rgb(232, 238, 236);
+}
+.container{
+    padding: 0;
+    margin: 0;
+    margin: auto;
+    display: flex;
+}
+.fa-check-circle{
+    color:green;
+    margin: auto;
+}
+.fa-exclamation-circle{
+    color:red;
+    margin: auto;
+}
+.login{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    background-color: white;
+    padding:75px;
+    margin: auto auto;
+    display: flex;
+    justify-content:center;
+}
+.loginForm button{
+    margin: 0.5rem;
+    margin-right: 1rem !important;
+    padding: 0 26px;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    font-weight: bolder;
+    font-size: 1.1rem;
+    background-color: black !important;
+    color: white;
+    box-shadow: none !important;
+    border-radius:0px;
+    margin-left: 0px;
+}
+.loginForm button:hover{
+    transform: scale(1.1,1.1);
+}
+.loginForm{
+    width:500px;
+    margin-left: 2.5rem;
+    margin-right: 2rem;
+}
+.combine_field label{
+    margin: auto;
+}
+.combine_field {
+    align-items: center;
+}
+.loginForm input{
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+}
+.loginForm input:focus,.loginForm textarea:focus,.loginForm select:focus{
+        outline: none;
+        background-color: none;
+        box-shadow: none;
+}
+.img{
+    padding: 5px;
+}
+.login img{
+    width:400px;
+    height:400px;
+}
+.spinner{
+    display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+    .login img{
+        width:300px !important;
+        height:300px !important;
+    }    
+    .login{
+        padding: 55px 40px !important;
+    }
+}
+@media only screen and (max-width: 1000px) {
+    .login img{
+        display: none;
+    }  
+    .loginForm{
+        width:300px !important;
+    }
+}
+@media only screen and (max-width: 530px) {
+    .login img{
+        display: none;
+    }
+    .loginForm{
+        width:200px !important;
+        margin-left: 0 !important;
+    }
+}
