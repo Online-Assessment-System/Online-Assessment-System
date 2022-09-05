@@ -1,6 +1,6 @@
 import './App.css';
 // import Login from './Login/Login';
-import Signup from './SignUp/Signup';
+import Register from './Register/Register';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <Router>
       <Routes>
         {/* <Route exact path="/login" element={<Login />} /> */}
-        <Route exact path="/signup" element={<Signup />} />
+        <Route exact path="/register" element={<Register />} />
       </Routes>
       </Router>    
     </>
