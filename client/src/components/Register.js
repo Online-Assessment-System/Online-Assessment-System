@@ -1,4 +1,4 @@
-import {React, useState } from "react";
+import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SERVER_URL } from "../config/config.js";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,14 +9,14 @@ const Register = () => {
   const navigate = useNavigate();
 
   const [userDetails, setUserDetails] = useState({ email: "", password: "" });
-  
-	const setDetails = (e) => {
+
+  const setDetails = (e) => {
     const name = e.target.name,
       value = e.target.value;
     setUserDetails({ ...userDetails, [name]: value });
   };
-  
-	const check = () => {
+
+  const check = () => {
     if (!/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(userDetails.email)) {
       SendErrorMessage("Invalid Email");
       return false;
@@ -27,8 +27,8 @@ const Register = () => {
     }
     return true;
   };
-  
-	const SendErrorMessage = (message) => {
+
+  const SendErrorMessage = (message) => {
     toast.error(message, {
       position: "top-right",
       autoClose: 10000,
@@ -45,8 +45,8 @@ const Register = () => {
     if (!check()) {
       return;
     }
-  
-		const { email, password } = userDetails;
+
+    const { email, password } = userDetails;
 
     const res = await fetch(SERVER_URL + "/api/user/register", {
       method: "POST",
@@ -70,8 +70,8 @@ const Register = () => {
     if (!check()) {
       return;
     }
-  
-		const { email, password } = userDetails;
+
+    const { email, password } = userDetails;
 
     const res = await fetch(SERVER_URL + "/api/user/login", {
       method: "POST",
@@ -92,65 +92,68 @@ const Register = () => {
 
   return (
     <>
-      <div className="main">
-        <input type="checkbox" id="chk" aria-hidden="true" />
-        <div className="signup">
-          <form>
-            <label htmlFor="chk" aria-hidden="true">
-              Sign Up
-            </label>
-            <input
-              type="email"
-              id="emailR"
-              name="email"
-              autoComplete="on"
-              value={userDetails.email}
-              onChange={setDetails}
-              placeholder="Email"
-            />
-            <input
-              type="password"
-              id="passwordR"
-              name="password"
-              autoComplete="on"
-              value={userDetails.password}
-              onChange={setDetails}
-              placeholder="Password"
-              required
-            />
-            <button className="custom-btn" onClick={register}>
-              Register
-            </button>
-          </form>
-        </div>
-        <div className="login">
-          <form>
-            <label htmlFor="chk" aria-hidden="true">
-              Login
-            </label>
-            <input
-              type="email"
-              id="emailL"
-              name="email"
-              autoComplete="on"
-              value={userDetails.email}
-              onChange={setDetails}
-              placeholder="Email"
-            />
-            <input
-              type="password"
-              id="passwordL"
-              name="password"
-              autoComplete="on"
-              value={userDetails.password}
-              onChange={setDetails}
-              placeholder="Password"
-              required
-            />
-            <button className="custom-btn" onClick={login}>
-              LogIn
-            </button>
-          </form>
+      <div className="register-div">
+        <div className="main">
+          <input type="checkbox" id="chk" aria-hidden="true" />
+          <div className="signup">
+            <form>
+              <label htmlFor="chk" aria-hidden="true">
+                Sign Up
+              </label>
+              <input
+                type="email"
+                id="emailR"
+                name="email"
+                autoComplete="on"
+                value={userDetails.email}
+                onChange={setDetails}
+                placeholder="Email"
+                required
+              />
+              <input
+                type="password"
+                id="passwordR"
+                name="password"
+                autoComplete="on"
+                value={userDetails.password}
+                onChange={setDetails}
+                placeholder="Password"
+                required
+              />
+              <button className="custom-btn" onClick={register}>
+                Register
+              </button>
+            </form>
+          </div>
+          <div className="login">
+            <form>
+              <label htmlFor="chk" aria-hidden="true">
+                Login
+              </label>
+              <input
+                type="email"
+                id="emailL"
+                name="email"
+                autoComplete="on"
+                value={userDetails.email}
+                onChange={setDetails}
+                placeholder="Email"
+              />
+              <input
+                type="password"
+                id="passwordL"
+                name="password"
+                autoComplete="on"
+                value={userDetails.password}
+                onChange={setDetails}
+                placeholder="Password"
+                required
+              />
+              <button className="custom-btn" onClick={login}>
+                LogIn
+              </button>
+            </form>
+          </div>
         </div>
       </div>
       <ToastContainer />

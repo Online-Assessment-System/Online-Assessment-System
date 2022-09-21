@@ -23,7 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // --------------- Routes ---------------
 const userRouter = require("./routes/user.route");
+const quizRouter = require("./routes/quiz.route");
 app.use("/api/user", userRouter);
+app.use("/api/quiz", quizRouter);
 
 // --------------- Connect to MongoDB ---------------
 mongoose
