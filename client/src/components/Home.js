@@ -1,12 +1,13 @@
 import React from "react";
-
+import Navbar  from "./Navbar";
+import Footer from "./Footer";
+import HomeBody from "./HomeBody";
 const Home = () => {
   return (
     <>
-      <h3>
-        This is home page We will design this page at the end it will have
-        intigration of all features with links and buttons
-      </h3>
+      <Navbar/>
+      <HomeBody/>
+      <Footer/>
     </>
   );
 };
