@@ -9,8 +9,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
-import { SERVER_URL } from "../../config/config";
-import "../../styles/Quiz.css";
+import { SERVER_URL } from "../config/config";
+import "../styles/Quiz.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

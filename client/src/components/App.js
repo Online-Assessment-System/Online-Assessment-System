@@ -1,12 +1,12 @@
 import "../styles/App.css";
 import { useState } from "react";
 import Home from "./Home";
-import Quiz from "./Quiz/Quiz";
+import Quiz from "./Quiz";
 import Register from "./Register";
-import Start from "./Quiz/Start";
+import Start from "./Start";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-function App() {
+const App = () => {
   const [quizData, setQuizData] = useState();
   return (
     <>
@@ -28,6 +28,6 @@ function App() {
       </Router>
     </>
   );
-}
+};
 
 export default App;

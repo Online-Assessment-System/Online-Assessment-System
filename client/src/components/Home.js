@@ -1,13 +1,16 @@
 import React from "react";
-import Navbar  from "./Navbar";
+import Navbar from "./Navbar";
+import Carousel from "./Carousel";
+import Cards from "./Cards";
 import Footer from "./Footer";
-import HomeBody from "./HomeBody";
+
 const Home = () => {
   return (
     <>
-      <Navbar/>
-      <HomeBody/>
-      <Footer/>
+      <Navbar />
+      <Carousel />
+      <Cards />
+      <Footer />
     </>
   );
 };

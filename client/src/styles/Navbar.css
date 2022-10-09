@@ -1,0 +1,89 @@
+.mynavbar {
+  background: black;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.mynavbar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  padding: 0.8em;
+}
+
+.navbar-logo {
+  color: #fff;
+  justify-self: start;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.mynav-menu {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 10px;
+  list-style: none;
+  text-align: center;
+  width: 60vw;
+  justify-content: flex-end;
+  margin: 0px;
+}
+
+.mynav-links {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 0rem 1rem;
+  font-size: 1.25em;
+}
+
+.mynav-links:hover {
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+
+.menu-icon {
+  display: none;
+  color: white;
+}
+
+@media screen and (max-width: 1140px) {
+  .mynav-menu {
+    display: none;
+  }
+  .menu-icon {
+    display: contents;
+  }
+  .menu-icon:hover {
+    cursor: pointer;
+  }
+  .mynavbar-container {
+    width: 100vw;
+    padding: 0.8em 2em;
+    justify-content: space-between;
+  }
+  .mynavbar {
+    flex-direction: column;
+  }
+  .mynav-menu-active {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100vw;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  .mynav-links {
+    padding: 0;
+  }
+}

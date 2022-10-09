@@ -1,0 +1,29 @@
+.feature-box-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  margin: 0 10em;
+}
+.feature-box {
+  display: flex;
+  flex-direction: column;
+  margin: 2em;
+}
+
+@media only screen and (max-width: 1250px) {
+  .feature-box-main {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin: 0;
+    justify-items: center;
+  }
+  .feature-box {
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media only screen and (max-width: 1400px) {
+  .feature-box-main {
+    margin: 0 auto;
+  }
+}

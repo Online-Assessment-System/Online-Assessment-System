@@ -4,7 +4,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import "../../styles/Start.css";
+import "../styles/Start.css";
 
 const Option = ({ params }) => {
   const updateAnswer = (e) => {

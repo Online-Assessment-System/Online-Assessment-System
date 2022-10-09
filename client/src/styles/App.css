@@ -1,4 +1,4 @@
-body{
+body {
   background-color: rgb(232, 238, 236) !important;
 }
 
@@ -39,4 +39,24 @@ body{
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Customization of Scrollbar*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #a7a7a7;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(94, 93, 93);
+  border-radius: 3em;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(54, 54, 54);
+  border-radius: 3em;
 }
