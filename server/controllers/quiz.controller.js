@@ -29,14 +29,14 @@ const practice = async (req, res) => {
       } else {
         console.log("Error in practice : ", error);
         return res.status(400).json({
-          message: "Internal error! Try again",
+          message: "Some API issue is there! Please contact adminstration",
           success: false,
         });
       }
     });
   } catch (error) {
     console.log("Error in practice : ", error);
-    return res.status(400).json({
+    return res.status(500).json({
       message: "Internal error! Try again",
       success: false,
     });

@@ -1,3 +1,4 @@
+import "./style.css";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
@@ -7,7 +8,6 @@ import MenuSharpIcon from "@mui/icons-material/MenuSharp";
 import CloseSharpIcon from "@mui/icons-material/CloseSharp";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
-import "../styles/Navbar.css";
 
 const Navbar = () => {
   const [isMenuBtnClicked, setIsMenuBtnClicked] = useState(false);

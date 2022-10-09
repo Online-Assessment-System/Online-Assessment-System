@@ -1,12 +1,11 @@
+import "./style.css";
 import React from "react";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import quiz from "../../../images/quiz.jpg";
+import profile from "../../../images/profile.jpg";
 import Typography from "@mui/material/Typography";
-import quiz from "../images/quiz.jpg";
-import leaderboard from "../images/leaderboard.jpg";
-import profile from "../images/profile.jpg";
-
-import "../styles/Cards.css";
+import CardContent from "@mui/material/CardContent";
+import leaderboard from "../../../images/leaderboard.jpg";
 
 const CardView = ({ img, title }) => {
   return (

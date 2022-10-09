@@ -1,9 +1,9 @@
+import "./style.css";
 import { React, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SERVER_URL } from "../config/config.js";
-import { ToastContainer, toast } from "react-toastify";
-import "../styles/Register.css";
 import "react-toastify/dist/ReactToastify.css";
+import { SERVER_URL } from "../../config/config";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
   const navigate = useNavigate();

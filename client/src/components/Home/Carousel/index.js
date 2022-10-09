@@ -1,8 +1,8 @@
+import "./style.css";
 import React from "react";
-import img1 from "../images/bg_img_1.jpg";
-import img2 from "../images/bg_img_2.jpg";
-import img3 from "../images/bg_img_3.jpg";
-import "../styles/Carousel.css";
+import img1 from "../../../images/bg_img_1.jpg";
+import img2 from "../../../images/bg_img_2.jpg";
+import img3 from "../../../images/bg_img_3.jpg";
 
 const Carousel = () => {
   return (

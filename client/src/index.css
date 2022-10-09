@@ -1,3 +1,4 @@
+@import url("../node_modules/semantic-ui-css/semantic.min.css");
 * {
   box-sizing: border-box;
 }
@@ -6,6 +7,23 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+/* Customization of Scrollbar*/
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #a7a7a7;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(94, 93, 93);
+  border-radius: 3em;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(54, 54, 54);
+  border-radius: 3em;
 }

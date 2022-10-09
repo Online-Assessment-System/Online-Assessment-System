@@ -1,0 +1,6 @@
+.img-main-box {
+  display: flex;
+  padding: 1em;
+  justify-content: center;
+  align-items: center;
+}
