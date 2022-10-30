@@ -1,6 +1,8 @@
-const express = require("express");
 const cors = require("cors");
+const express = require("express");
 const mongoose = require("mongoose");
+const cookieParser = require('cookie-parser');
+
 require("dotenv").config();
 
 const { CLIENT_URL, PORT, env, ATLAS_URL } = require("./config/config");
@@ -20,6 +22,8 @@ app.use(
 app.use(express.json());
 // Parse urlencoded request body.
 app.use(express.urlencoded({ extended: true }));
+// Help to set cookie
+app.use(cookieParser());
 
 // --------------- Routes ---------------
 const userRouter = require("./routes/user.route");

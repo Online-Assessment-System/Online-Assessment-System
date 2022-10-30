@@ -1,8 +1,15 @@
 require("dotenv").config();
 const request = require("request");
+const User = require("../models/user.model");
 const { QUIZ_API_KEY } = require("../config/config");
 
 const practice = async (req, res) => {
+  if(req.message === "Invalid Access"){
+    return res.status(req.status).json({
+      message: "Please Login First...",
+      success: false
+    })
+  }
   try {
     const tag = req.body.tag;
     const difficulty = req.body.difficulty;
@@ -43,6 +50,31 @@ const practice = async (req, res) => {
   }
 };
 
+const save = async (req, res) => {
+  const quizData = req.body;
+  const user = await User.findOne({ email: req.cookies.email });
+  if(user){
+    const response = await user.addQuiz(quizData);
+    if(response==1){
+      return res.status(200).json({
+        "message": 'Quiz data is added successfully',
+        success: true,    
+      });
+    }else{
+      return res.status(400).json({
+        "message": 'Internal Error Occurred!',
+        success: false,    
+      });
+    }
+  }else{
+      return res.status(400).json({
+        "message": 'Internal Error Occurred!',
+        success: false,    
+      });
+    }
+};
+
 module.exports = {
   practice,
+  save,
 };

@@ -1,4 +1,3 @@
-import { shuffle } from "./utils";
 import Main from "./Main";
 import Page from "./Page";
 import Layout from "./Layout";
@@ -36,37 +35,6 @@ const Quiz = () => {
     }, 2000);
   };
 
-  const replayQuiz = () => {
-    setLoading(true);
-
-    const shuffledData = shuffle(data);
-    shuffledData.forEach((element) => {
-      element.options = shuffle(element.options);
-    });
-
-    setData(shuffledData);
-
-    setTimeout(() => {
-      setIsQuizStarted(true);
-      setIsQuizCompleted(false);
-      setResultData(null);
-      setLoading(false);
-    }, 1000);
-  };
-
-  const resetQuiz = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setData(null);
-      setCountdownTime(null);
-      setIsQuizStarted(false);
-      setIsQuizCompleted(false);
-      setResultData(null);
-      setLoading(false);
-    }, 1000);
-  };
-
   return (
     <Layout>
       {loading && <Loader />}
@@ -81,7 +49,7 @@ const Quiz = () => {
         />
       )}
       {!loading && isQuizCompleted && (
-        <Result {...resultData} replayQuiz={replayQuiz} resetQuiz={resetQuiz} />
+        <Result {...resultData} saved={false}  />
       )}
     </Layout>
   );

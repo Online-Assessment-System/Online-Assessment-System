@@ -120,6 +120,7 @@ const Main = ({ startQuiz }) => {
         difficulty,
         limit: numOfQuestions,
       }),
+      credentials:"include",
     });
 
     const data = await res.json();
@@ -151,7 +152,7 @@ const Main = ({ startQuiz }) => {
 
   return (
     <Container>
-      <Segment>
+      <Segment className="main-box">
         <Item.Group divided>
           <Item>
             <div className="img-main-box">

@@ -7,6 +7,36 @@ const cryptPassword = async (password) => {
   return hashPassword;
 };
 
+const read = async (req, res) => {
+  return res.status(req.status).json({
+    'message': req.message,
+    'user': req.user,
+  })
+}
+
+const update = async (req, res) => {
+  const userDetails = req.body;
+  const user = await User.findOne({ email: userDetails.email });
+  if(user){
+    const response = await user.updataDetails(userDetails);
+    if(response==1){
+      return res.status(200).json({
+        "message": 'User is updated successfully',
+        success: true,    
+      });
+    }else{
+      return res.status(400).json({
+        "message": 'Internal Error Occurred! Try again...',
+        success: false,    
+      });
+    }
+  }else{
+      return res.status(400).json({
+        "message": 'Internal Error Occurred! Try again...',
+        success: false,    
+      });
+    }
+}
 
 const register = async (req, res) => {
   try {
@@ -46,16 +76,36 @@ const login = async (req, res) => {
     if (user){ 
       const isMatch = await bcrypt.compare(userDetails.password, user.password);
       if(isMatch){
-        return res.status(200).json({ 
+        const token = await user.generateAuthToken();
+        if (token === -1) {
+          return res.status(400).json({ 
+            "message": 'Internal error! Try again', 
+            success: false,
+          });
+        }
+        const Day30 = 25892000000;
+        res.cookie("token", token, {
+            expires: new Date(Date.now() + Day30),
+        });
+        res.cookie("email", user.email, {
+            expires: new Date(Date.now() + Day30),
+        })
+        res.status(200).json({ 
           "message": 'Login is successful', 
           success: true,
         });
+      }else{
+        return res.status(400).json({
+          "message": 'Invalid Credentials',
+          success: false,    
+        });
       }
+    }else{
+      return res.status(400).json({
+        "message": 'Invalid Credentials',
+        success: false,    
+      });
     }
-    return res.status(400).json({
-      "message": 'Invalid Credentials',
-      success: false,    
-    });
   } catch (error) {
   console.log("Error in login : ",error);
   return res.status(400).json({ 
@@ -68,4 +118,6 @@ const login = async (req, res) => {
 module.exports = {
   register,
   login,
+  read,
+  update,
 };

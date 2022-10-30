@@ -57,6 +57,14 @@
   color: white;
 }
 
+.logout-profile{
+  display: flex;
+}
+
+.logout-p{
+  display: none;
+}
+
 @media screen and (max-width: 1140px) {
   .mynav-menu {
     display: none;
@@ -85,5 +93,15 @@
   }
   .mynav-links {
     padding: 0;
+  }
+  .logout-profile{
+    display: flex;
+    flex-direction: column;
+  }
+  .logout-btn{
+    margin-top: 0.6em;
+  }
+  .logout-p{
+    display: block;
   }
 }

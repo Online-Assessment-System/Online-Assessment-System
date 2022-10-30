@@ -1,4 +1,3 @@
-import he from "he";
 import PropTypes from "prop-types";
 import Countdown from "../Countdown";
 import { getLetter } from "../utils";
@@ -28,15 +27,15 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
 
   const handleNext = () => {
     let point = 0;
-    if (userSlectedAns === he.decode(data[questionIndex].correct_answer[0])) {
+    if (userSlectedAns === data[questionIndex].correct_answer[0]) {
       point = 1;
     }
 
     const qna = questionsAndAnswers;
     qna.push({
-      question: he.decode(data[questionIndex].question),
+      question: data[questionIndex].question,
       user_answer: userSlectedAns,
-      correct_answer: he.decode(data[questionIndex].correct_answer[0]),
+      correct_answer: data[questionIndex].correct_answer[0],
       point,
     });
 
@@ -56,11 +55,27 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
   };
 
   const timeOver = (timeTaken) => {
+    const qna = questionsAndAnswers;
+    let questionId = questionIndex;
+    while(qna.length < data.length){
+      let point = 0;
+      if (userSlectedAns === data[questionId].correct_answer[0]) {
+        point = 1;
+      }
+      qna.push({
+        question: data[questionId].question,
+        user_answer: "Not Answered",
+        correct_answer: data[questionId].correct_answer[0],
+        point,
+      });
+      questionId += 1;
+    }
+
     return endQuiz({
       totalQuestions: data.length,
       correctAnswers,
       timeTaken,
-      questionsAndAnswers,
+      'questionsAndAnswers':qna,
     });
   };
 
@@ -87,7 +102,7 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
                 <br />
                 <Item.Meta>
                   <Message size="huge" floating>
-                    <b>{`Q. ${he.decode(data[questionIndex].question)}`}</b>
+                    <b>{`Q. ${data[questionIndex].question}`}</b>
                   </Message>
                   <br />
                   <Item.Description>
@@ -97,7 +112,7 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
                   <Menu vertical fluid size="massive">
                     {data[questionIndex].options.map((option, i) => {
                       const letter = getLetter(i);
-                      const decodedOption = he.decode(option);
+                      const decodedOption = option;
 
                       return (
                         <Menu.Item

@@ -3,21 +3,42 @@ import Stats from "./Stats";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Container, Menu } from "semantic-ui-react";
+import { SERVER_URL } from "../../../config/config";
+import { ToastContainer, toast } from "react-toastify";
 
 const Result = ({
   totalQuestions,
   correctAnswers,
   timeTaken,
   questionsAndAnswers,
-  replayQuiz,
-  resetQuiz,
+  saved,
 }) => {
   const [activeTab, setActiveTab] = useState("Stats");
-
+  const [saveDone, setSaveDone] = useState(false); 
   const handleTabClick = (e, { name }) => {
     setActiveTab(name);
   };
 
+  const saveQuizData = async () => {
+    if(saved || saveDone){
+      return;
+    }
+
+    const res = await fetch(SERVER_URL + "/api/quiz/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ totalQuestions, correctAnswers, timeTaken, questionsAndAnswers}),
+      credentials: 'include',
+    });
+
+    const data = await res.json();
+    if(!data.success){
+      toast.error(data.message, { position: "top-right" });
+    }
+
+    setSaveDone(true);
+  };
+  saveQuizData();
   return (
     <Container>
       <Menu fluid widths={2}>
@@ -37,12 +58,11 @@ const Result = ({
           totalQuestions={totalQuestions}
           correctAnswers={correctAnswers}
           timeTaken={timeTaken}
-          replayQuiz={replayQuiz}
-          resetQuiz={resetQuiz}
         />
       )}
       {activeTab === "QNA" && <QNA questionsAndAnswers={questionsAndAnswers} />}
       <br />
+      <ToastContainer/>
     </Container>
   );
 };
@@ -52,8 +72,7 @@ Result.propTypes = {
   correctAnswers: PropTypes.number.isRequired,
   timeTaken: PropTypes.number.isRequired,
   questionsAndAnswers: PropTypes.array.isRequired,
-  replayQuiz: PropTypes.func.isRequired,
-  resetQuiz: PropTypes.func.isRequired,
+  saved: PropTypes.bool.isRequired,
 };
 
 export default Result;
