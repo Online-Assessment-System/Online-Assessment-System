@@ -74,7 +74,52 @@ const save = async (req, res) => {
     }
 };
 
+const getAccuracy = (quizData) => {
+  let totalScore = 0, totalQuestions = 0;
+  for(let id = 0; id < quizData.length; id++){
+    totalScore += Number(quizData[id].correctAnswers);
+    totalQuestions += Number(quizData[id].totalQuestions);
+  }
+  return totalScore/totalQuestions;
+}
+
+const getSpeed = (quizData) => {
+  let totalTime = 0, totalQuestions = 0;
+  for(let id = 0; id < quizData.length; id++){
+    totalTime += Number(quizData[id].timeTaken);
+    totalQuestions += Number(quizData[id].totalQuestions);
+  }
+  return totalTime/totalQuestions;
+}
+
+const readAll = async (req, res) => {
+  try{
+    const users = await User.find();
+    let responseData = [];
+    for(let id = 0; id < users.length; id++){
+      let obj = {
+        'email' : users[id].email,
+        'country' : users[id].country,
+        'accuracy' : getAccuracy(users[id].quiz),
+        'speed' : getSpeed(users[id].quiz),
+      }
+      responseData.push(obj);
+    }
+    return res.status(200).json({
+      data : responseData,
+      success : true,
+    });
+  }catch(error){
+    return res.status(400).json({
+      message : 'Internal Error! Try again...', 
+      success : false,
+    });
+  }
+
+}
+
 module.exports = {
   practice,
   save,
+  readAll,
 };
