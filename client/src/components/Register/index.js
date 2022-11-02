@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { SERVER_URL } from "../../config/config";
 import { ToastContainer, toast } from "react-toastify";
+import Navbar from "../Home/Navbar";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ const Register = () => {
       toast.success(data.message, { position: "top-right" });
       setTimeout(() => {
         navigate("/", { replace: true });
-      }, 3000);
+      }, 1000);
     }
   };
 
@@ -88,12 +89,13 @@ const Register = () => {
       toast.success(data.message, { position: "top-right" });
       setTimeout(() => {
         navigate("/", { replace: true });
-      }, 3000);
+      }, 1000);
     }
   };
 
   return (
     <>
+      <Navbar/>
       <div className="register-div">
         <div className="main">
           <input type="checkbox" id="chk" aria-hidden="true" />

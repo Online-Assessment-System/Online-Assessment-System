@@ -57,7 +57,7 @@ const Navbar = () => {
     toast.success("User is logged out successfully", { position: "top-right" });
     setTimeout(() => {
       navigate("/", { replace: true });
-    }, 3000);
+    }, 1000);
   }
 
   const handleMenuClick = () => {

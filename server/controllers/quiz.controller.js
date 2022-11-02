@@ -87,7 +87,7 @@ const getSpeed = (quizData) => {
   let totalTime = 0, totalQuestions = 0;
   for(let id = 0; id < quizData.length; id++){
     totalTime += Number(quizData[id].timeTaken);
-    totalQuestions += Number(quizData[id].totalQuestions);
+    totalQuestions += Number(quizData[id].correctAnswers);
   }
   return totalTime/totalQuestions;
 }
