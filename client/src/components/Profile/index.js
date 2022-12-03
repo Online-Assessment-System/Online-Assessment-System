@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   MDBCol,
@@ -118,6 +118,40 @@ const getCookie = (cookie_name) => {
     }
   }
   return "";
+}
+
+const Analytics = () => {
+  const [loading, setLoading] = useState(false);
+  const [charData, setChartData] = useState({});
+
+  const getData = async () => {
+    if(loading){
+      return;
+    }
+    const res = await fetch(SERVER_URL + "/api/user/visualizer", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: 'include',
+    });
+
+    const data = await res.json();
+    setLoading(true);
+    setChartData(data);
+  };
+
+  if(loading){
+    console.log(charData);
+  }
+  useEffect(()=>{
+    getData();
+  })
+
+  return (
+    <>
+      {!loading && <div style={{margin:'2em', fontSize:'larger'}}>We are fetching your data... </div>}
+      {loading && "Display Charts Here..."}
+    </>
+  )
 }
 
 
@@ -332,6 +366,23 @@ const Profile = (props) => {
                 Quiz History
               </Typography>
               <StickyHeadTable/>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+
+        <MDBRow>
+          <MDBCol lg="12">
+            <MDBCard className="mb-5">
+              <Typography
+                variant="h4"
+                component="h4"
+                textAlign="center"
+                sx={{ color: "black" }}
+                pt={3}
+              >
+                Analytics
+              </Typography>
+              <Analytics />
             </MDBCard>
           </MDBCol>
         </MDBRow>

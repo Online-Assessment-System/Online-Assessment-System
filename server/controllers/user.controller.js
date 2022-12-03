@@ -115,9 +115,32 @@ const login = async (req, res) => {
   }
 }
 
+const visualizer = async (req, res) => {
+  try{
+    const user = req.user;
+    let totalScore = 0, totalQuestions = 0;
+    let accuracyData = [];
+    for(let id = 0; id < user.quiz.length; id++){
+      let accuracy = Number(((user.quiz[id].correctAnswers * 100) / user.quiz[id].totalQuestions).toFixed(3));
+      accuracyData.push([accuracy, user.quiz[id].time])
+    }
+    console.log(accuracyData);
+    return res.status(req.status).json({
+      'message' : req.message,
+      'accuracy' : accuracyData,
+    })
+  }catch(err){
+    return res.status(req.status).json({
+      'message' : req.message,
+    })
+  }
+
+}
+
 module.exports = {
   register,
   login,
   read,
   update,
+  visualizer,
 };
