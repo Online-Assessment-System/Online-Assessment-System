@@ -27,6 +27,9 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import './style.css'
+import CanvasJSReact from './canvasjs.react';
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 let quizData = [];
 
@@ -204,28 +207,43 @@ function Line() {
     setChartData(data);
   };
   getData();
-  console.log(loading);
   if(loading){
-  const data=[];
-  charData["accuracy"].forEach(function(ele) {
-    let temp={
-        "Accuracy":ele[0],
-        "Date":ele[1].substring(0,10),
-      }
-      data.push(temp);
-  });
-  console.log(data);
-  const primaryxAxis = { valueType: 'Category' };
-  return (
-      <div>
-      <ChartComponent id="charts" primaryXAxis={primaryxAxis}>
-      <Inject services={[ColumnSeries, Tooltip, LineSeries, Category]}/>
-      <SeriesCollectionDirective>
-      <SeriesDirective dataSource={data} xName='Date' yName='Accuracy' name='Performance'/>
-      </SeriesCollectionDirective>
-      </ChartComponent>
-      </div>
-  );
+    const data_acc=[];
+    var cur=1;
+    charData["accuracy"].forEach(function(ele) {
+      let temp={
+          y:ele[0],
+          x:cur,
+        }
+        cur=cur+1;
+        data_acc.push(temp);
+    });
+    const options = {
+			animationEnabled: true,
+			exportEnabled: true,
+			theme: "light2", // "light1", "dark1", "dark2"
+			axisY: {
+				title: "Accuracy",
+        minimum:0,
+        maximum:100,
+        interval:10
+			},
+			axisX: {
+				title: "Quiz",
+        interval:1
+			},
+      title:{
+        
+      },
+			data: [{
+				type: "line",
+				toolTipContent: "Quiz {x}: {y}%",
+				dataPoints: data_acc
+			}]
+		}
+    return(
+      <CanvasJSChart options = {options}/>
+    )
   }
 };
 
