@@ -68,26 +68,6 @@ class Bar extends React.Component {
   }
 };
 
-function Line() {
-      const data = [
-          { month: 'Jan', sales: 35 }, { month: 'Feb', sales: 28 },
-          { month: 'Mar', sales: 34 }, { month: 'Apr', sales: 32 },
-          { month: 'May', sales: 40 }, { month: 'Jun', sales: 32 },
-          { month: 'Jul', sales: 35 }, { month: 'Aug', sales: 55 },
-          { month: 'Sep', sales: 38 }, { month: 'Oct', sales: 30 },
-          { month: 'Nov', sales: 25 }, { month: 'Dec', sales: 32 }
-      ];
-      const primaryxAxis = { valueType: 'Category' };
-      return (
-        <div>
-        <ChartComponent id="charts" primaryXAxis={primaryxAxis}>
-    <Inject services={[ColumnSeries, Tooltip, LineSeries, Category]}/>
-    <SeriesCollectionDirective>
-    <SeriesDirective dataSource={data} xName='month' yName='sales' name='Sales'/>
-    </SeriesCollectionDirective>
-    </ChartComponent></div>);
-};
-
 function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -203,6 +183,52 @@ const Analytics = () => {
     </>
   )
 }
+
+function Line() {
+  const [loading, setLoading] = useState(false);
+  const [charData, setChartData] = useState({});
+
+  const getData = async () => {
+    if(loading){
+      return;
+    }
+    console.log("hi");
+    const res = await fetch(SERVER_URL + "/api/user/visualizer", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: 'include',
+    });
+
+    const data = await res.json();
+    setLoading(true);
+    setChartData(data);
+  };
+  getData();
+  console.log(loading);
+  if(loading){
+  const data=[];
+  charData["accuracy"].forEach(function(ele) {
+    let temp={
+        "Accuracy":ele[0],
+        "Date":ele[1].substring(0,10),
+      }
+      data.push(temp);
+  });
+  console.log(data);
+  const primaryxAxis = { valueType: 'Category' };
+  return (
+      <div>
+      <ChartComponent id="charts" primaryXAxis={primaryxAxis}>
+      <Inject services={[ColumnSeries, Tooltip, LineSeries, Category]}/>
+      <SeriesCollectionDirective>
+      <SeriesDirective dataSource={data} xName='Date' yName='Accuracy' name='Performance'/>
+      </SeriesCollectionDirective>
+      </ChartComponent>
+      </div>
+  );
+  }
+};
+
 
 
 const Profile = (props) => {
@@ -420,7 +446,7 @@ const Profile = (props) => {
           </MDBCol>
         </MDBRow>
 
-        <MDBRow>
+        {/* <MDBRow>
           <MDBCol lg="16">
             <MDBCard className="mb-4">
               <Typography
@@ -435,7 +461,7 @@ const Profile = (props) => {
               <Bar/>
             </MDBCard>
           </MDBCol>
-        </MDBRow>
+        </MDBRow> */}
 
         <MDBRow>
           <MDBCol lg="16">
