@@ -119,15 +119,35 @@ const visualizer = async (req, res) => {
   try{
     const user = req.user;
     let totalScore = 0, totalQuestions = 0;
-    let accuracyData = [];
+    let accuracyData = [], speedData = [];
     for(let id = 0; id < user.quiz.length; id++){
       let accuracy = Number(((user.quiz[id].correctAnswers * 100) / user.quiz[id].totalQuestions).toFixed(3));
-      accuracyData.push([accuracy, user.quiz[id].time])
+      accuracyData.push([accuracy, user.quiz[id].time]);
+      let speed = Number(((user.quiz[id].timeTaken) / user.quiz[id].totalQuestions).toFixed(3))
+      speedData.push([speed, user.quiz[id].time]);
     }
-    console.log(accuracyData);
+    let performanceData = {};
+    const categories = ["Linux", "DevOps", "Networking", "Programming", "Cloud", "PHP", "random"];
+    for(let index = 0; index < categories.length; index++){
+      let correctAnswers = 0, totalQuestions = 0;
+      for(let id = 0; id < user.quiz.length; id++){
+        try{
+          if(user.quiz[id].category === categories[index]){
+            correctAnswers += user.quiz[id].correctAnswers;
+            totalQuestions += user.quiz[id].totalQuestions;
+          }
+        }catch(err){
+          correctAnswers += user.quiz[id].correctAnswers;
+          totalQuestions += user.quiz[id].totalQuestions;
+        }
+      }
+      performanceData[categories[index]] = [correctAnswers, totalQuestions];
+    }
     return res.status(req.status).json({
       'message' : req.message,
       'accuracy' : accuracyData,
+      'performanceData': performanceData,
+      'speedData': speedData,
     })
   }catch(err){
     return res.status(req.status).json({

@@ -14,7 +14,7 @@ import {
   Header,
 } from "semantic-ui-react";
 
-const Quiz = ({ data, countdownTime, endQuiz }) => {
+const Quiz = ({ data, countdownTime, endQuiz, category }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [userSlectedAns, setUserSlectedAns] = useState(null);
@@ -45,6 +45,7 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
         correctAnswers: correctAnswers + point,
         timeTaken,
         questionsAndAnswers: qna,
+        'category': category
       });
     }
 
@@ -76,6 +77,7 @@ const Quiz = ({ data, countdownTime, endQuiz }) => {
       correctAnswers,
       timeTaken,
       'questionsAndAnswers':qna,
+      'category': category
     });
   };
 

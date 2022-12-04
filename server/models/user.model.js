@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     country: { type: String, default: "India"},
     token : { type : String},
     quiz: [{
+      category : {type: String, require:true },
       totalQuestions: { type: Number, required: true },
       correctAnswers: { type: Number, required: true },
       timeTaken: { type: Number, require: true},
@@ -49,10 +50,11 @@ userSchema.methods.updataDetails = async function (user){
 userSchema.methods.addQuiz = async function (quiz){
   try{
     const quizData = {
+      category : quiz.category[0],
       totalQuestions : Number(quiz.totalQuestions),
       correctAnswers : Number(quiz.correctAnswers),
       timeTaken : Number(quiz.timeTaken),
-      questionsAndAnswers: quiz.questionsAndAnswers, 
+      questionsAndAnswers: quiz.questionsAndAnswers 
     }
     this.quiz.push(quizData);
     await this.save();

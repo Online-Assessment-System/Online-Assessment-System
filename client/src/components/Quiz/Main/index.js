@@ -145,7 +145,8 @@ const Main = ({ startQuiz }) => {
       setProcessing(false);
       startQuiz(
         finalResults,
-        countdownTime.hours + countdownTime.minutes + countdownTime.seconds
+        countdownTime.hours + countdownTime.minutes + countdownTime.seconds,
+        category
       );
     }, 1000);
   };

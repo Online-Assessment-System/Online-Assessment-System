@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, ColumnSeries, Legend, Category, Tooltip, DataLabel, LineSeries } from '@syncfusion/ej2-react-charts';
 import { useNavigate } from "react-router-dom";
 import {
   MDBCol,
@@ -26,7 +25,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import './style.css'
+import './style.css';
+import CanvasJSReact from './canvasjs.react';
+var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 let quizData = [];
 
@@ -39,34 +40,6 @@ const columns = [
 ];
 
 let rows = [];
-
-class Bar extends React.Component {
-  constructor() {
-      super(...arguments);
-      this.data = [
-          { month: 'Jan', sales: 35 }, { month: 'Feb', sales: 28 },
-          { month: 'Mar', sales: 34 }, { month: 'Apr', sales: 32 },
-          { month: 'May', sales: 40 }, { month: 'Jun', sales: 32 },
-          { month: 'Jul', sales: 35 }, { month: 'Aug', sales: 55 },
-          { month: 'Sep', sales: 38 }, { month: 'Oct', sales: 30 },
-          { month: 'Nov', sales: 25 }, { month: 'Dec', sales: 32 }
-      ];
-      this.primaryxAxis = { valueType: 'Category' };
-  }
-  clickHandler() {
-      this.chartInstance.print();
-  }
-  render() {
-    return (<div>
-      <ChartComponent id='charts' ref={chart => this.chartInstance = chart} primaryXAxis={this.primaryxAxis}>
-      <Inject services={[ColumnSeries, Legend, Tooltip, DataLabel, LineSeries, Category]}/>
-      <SeriesCollectionDirective>
-        <SeriesDirective dataSource={this.data} xName='month' yName='sales' type='Column' name='Sales'>
-        </SeriesDirective>
-      </SeriesCollectionDirective>
-    </ChartComponent></div>);
-  }
-};
 
 function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
@@ -149,9 +122,127 @@ const getCookie = (cookie_name) => {
   return "";
 }
 
+function Bar(props) {
+  const performanceData = props.chartData["performanceData"];  
+  const options = {
+    animationEnabled: true,
+    theme: "light2",
+    title:{ text: "Performance" },
+    axisX: { title: "Topics", reversed: true},
+    axisY: { title: "Questions Attempted", includeZero: true},
+    data: [{
+      type: "bar",
+      dataPoints: [
+        { y:  performanceData["Linux"][1], label: "Linux" },
+        { y:  performanceData["DevOps"][1], label: "DevOps" },
+        { y:  performanceData["Networking"][1], label: "Networking" },
+        { y:  performanceData["Programming"][1], label: "Programming" },
+        { y:  performanceData["Cloud"][1], label: "Cloud" },
+        { y:  performanceData["PHP"][1], label: "PHP" },
+        { y:  performanceData["random"][1], label: "Random" }
+      ]
+    }]
+  }
+  return(
+    <CanvasJSChart options = {options}/>
+  )
+};
+
+
+function Area(props){
+  const speedData = props.chartData["speedData"];
+  const data_acc=[];
+  var cur=1;
+  speedData.forEach(function(ele) {
+    let temp={
+        y:ele[0]/1000,
+        x:cur,
+    }
+    cur=cur+1;
+    data_acc.push(temp);
+  });
+  const options = {
+    animationEnabled: true,
+    title: {
+      text: "Speed"
+    },
+    axisY: { title: "Speed"},
+		axisX: { title: "Quiz", interval:1},
+		data: [{
+      type: "splineArea",
+			toolTipContent: "Quiz {x}: {y}sec",
+			dataPoints: data_acc
+		}]
+  }
+  return(
+    <CanvasJSChart options = {options}/>
+  )
+}
+
+
+function Pie(props){
+  const performanceData = props.chartData["performanceData"];  
+  const options = {
+    theme: "light1",
+    animationEnabled: true,
+    title:{
+      text: "Topics"
+    },
+    data: [{
+      type: "pie",
+      showInLegend: true,
+      legendText: "{label}",
+      toolTipContent: "{label}: <strong>{y}%</strong>",
+      indexLabel: "{y}%",
+      indexLabelPlacement: "inside",
+      dataPoints: [
+        { y:  performanceData["Linux"][1], label: "Linux" },
+        { y:  performanceData["DevOps"][1], label: "DevOps" },
+        { y:  performanceData["Networking"][1], label: "Networking" },
+        { y:  performanceData["Programming"][1], label: "Programming" },
+        { y:  performanceData["Cloud"][1], label: "Cloud" },
+        { y:  performanceData["PHP"][1], label: "PHP" },
+        { y:  performanceData["random"][1], label: "Random" }
+      ]
+    }]
+  }
+  return(
+    <CanvasJSChart options = {options}/>
+  )
+}
+
+function Line(props) {
+  const chartData = props.chartData;  
+  const data_acc=[];
+  var cur=1;
+  chartData["accuracy"].forEach(function(ele) {
+    let temp={
+        y:ele[0],
+        x:cur,
+    }
+    cur=cur+1;
+    data_acc.push(temp);
+  });
+  const options = {
+		animationEnabled: true,
+		theme: "light1", // "light2", "dark1", "dark2"
+		axisY: { title: "Accuracy", minimum:0, maximum:100, interval:10},
+		axisX: { title: "Quiz", interval:1},
+    title: { text: "Accuracy"},
+		data: [{
+			type: "line",
+			toolTipContent: "Quiz {x}: {y}%",
+			dataPoints: data_acc
+		}]
+	}
+  return(
+    <CanvasJSChart options = {options}/>
+  )
+};
+
 const Analytics = () => {
   const [loading, setLoading] = useState(false);
-  const [charData, setChartData] = useState({});
+  const [chartData, setChartData] = useState({});
 
   const getData = async () => {
     if(loading){
@@ -168,68 +259,36 @@ const Analytics = () => {
     setChartData(data);
   };
 
-  if(loading){
-    console.log(charData);
-  }
   useEffect(()=>{
     getData();
   })
 
   return (
     <>
-      {!loading && <div style={{margin:'2em', fontSize:'larger'}}>We are fetching your data... </div>}
-      {loading && <Bar/>}
-      {loading && <Line/>}
+      {!loading && <div style={{margin:'3em', fontSize:'larger'}}>We are fetching your data... </div>}
+      {loading && 
+      <>
+        <MDBRow className="mt-3">
+          <MDBCol sm="6">
+            <Line chartData={chartData}/>
+          </MDBCol>
+          <MDBCol sm="6">
+            <Bar chartData={chartData}/>
+          </MDBCol>
+        </MDBRow>
+        <MDBRow className="mt-5">
+        < MDBCol sm="6">
+            <Pie chartData={chartData}/>
+          </MDBCol>
+        <MDBCol sm="6">
+          <Area chartData={chartData}/>
+          </MDBCol>
+        </MDBRow>
+      </>
+      }
     </>
   )
 }
-
-function Line() {
-  const [loading, setLoading] = useState(false);
-  const [charData, setChartData] = useState({});
-
-  const getData = async () => {
-    if(loading){
-      return;
-    }
-    console.log("hi");
-    const res = await fetch(SERVER_URL + "/api/user/visualizer", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: 'include',
-    });
-
-    const data = await res.json();
-    setLoading(true);
-    setChartData(data);
-  };
-  getData();
-  console.log(loading);
-  if(loading){
-  const data=[];
-  charData["accuracy"].forEach(function(ele) {
-    let temp={
-        "Accuracy":ele[0],
-        "Date":ele[1].substring(0,10),
-      }
-      data.push(temp);
-  });
-  console.log(data);
-  const primaryxAxis = { valueType: 'Category' };
-  return (
-      <div>
-      <ChartComponent id="charts" primaryXAxis={primaryxAxis}>
-      <Inject services={[ColumnSeries, Tooltip, LineSeries, Category]}/>
-      <SeriesCollectionDirective>
-      <SeriesDirective dataSource={data} xName='Date' yName='Accuracy' name='Performance'/>
-      </SeriesCollectionDirective>
-      </ChartComponent>
-      </div>
-  );
-  }
-};
-
-
 
 const Profile = (props) => {
 	const navigate = useNavigate();
@@ -445,27 +504,10 @@ const Profile = (props) => {
             </MDBCard>
           </MDBCol>
         </MDBRow>
-
-        {/* <MDBRow>
-          <MDBCol lg="16">
-            <MDBCard className="mb-4">
-              <Typography
-                variant="h4"
-                component="h4"
-                textAlign="center"
-                sx={{ color: "black" }}
-                pt={3}
-              >
-                Topic Wise Score
-              </Typography>
-              <Bar/>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow> */}
-
+        
         <MDBRow>
           <MDBCol lg="16">
-            <MDBCard className="mb-3">
+            <div style={{'backgroundColor':'white'}}>
               <Typography
                 variant="h4"
                 component="h4"
@@ -473,33 +515,14 @@ const Profile = (props) => {
                 sx={{ color: "black" }}
                 pt={3}
               >
-                Performance
+                Analytics
               </Typography>
-              <Line/>
-            </MDBCard>
+              <Analytics/>
+            </div>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
-
-      {/* <MDBContainer className="py-5">
-      <MDBRow>
-          <MDBCol lg="20">
-            <MDBCard className="mb-7">
-              <Typography
-                variant="h4"
-                component="h4"
-                textAlign="center"
-                sx={{ color: "black" }}
-                pt={3}
-              >
-                Performance
-              </Typography>
-            <Bar/>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
-			<ToastContainer/> */}
+			<ToastContainer/>
     </section>
   );
 };

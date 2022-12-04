@@ -12,11 +12,12 @@ const Quiz = () => {
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [isQuizCompleted, setIsQuizCompleted] = useState(false);
   const [resultData, setResultData] = useState(null);
+  const [category, setCategory] = useState('');
 
-  const startQuiz = (data, countdownTime) => {
+  const startQuiz = (data, countdownTime, category) => {
     setLoading(true);
     setCountdownTime(countdownTime);
-
+    setCategory(category);
     setTimeout(() => {
       setData(data);
       setIsQuizStarted(true);
@@ -46,6 +47,7 @@ const Quiz = () => {
           data={data}
           countdownTime={Number(countdownTime)}
           endQuiz={endQuiz}
+          category = {category}
         />
       )}
       {!loading && isQuizCompleted && (

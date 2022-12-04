@@ -11,6 +11,7 @@ const Result = ({
   correctAnswers,
   timeTaken,
   questionsAndAnswers,
+  category,
   saved,
 }) => {
   const [activeTab, setActiveTab] = useState("Stats");
@@ -23,11 +24,11 @@ const Result = ({
     if(saved || saveDone){
       return;
     }
-
+    console.log("In Result",category);
     const res = await fetch(SERVER_URL + "/api/quiz/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ totalQuestions, correctAnswers, timeTaken, questionsAndAnswers}),
+      body: JSON.stringify({ totalQuestions, correctAnswers, timeTaken, questionsAndAnswers, category}),
       credentials: 'include',
     });
 
