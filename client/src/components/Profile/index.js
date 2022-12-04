@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { ChartComponent, SeriesCollectionDirective, SeriesDirective, Inject, ColumnSeries, Legend, Category, Tooltip, DataLabel, LineSeries } from '@syncfusion/ej2-react-charts';
 import { useNavigate } from "react-router-dom";
 import {
   MDBCol,
@@ -38,6 +39,54 @@ const columns = [
 ];
 
 let rows = [];
+
+class Bar extends React.Component {
+  constructor() {
+      super(...arguments);
+      this.data = [
+          { month: 'Jan', sales: 35 }, { month: 'Feb', sales: 28 },
+          { month: 'Mar', sales: 34 }, { month: 'Apr', sales: 32 },
+          { month: 'May', sales: 40 }, { month: 'Jun', sales: 32 },
+          { month: 'Jul', sales: 35 }, { month: 'Aug', sales: 55 },
+          { month: 'Sep', sales: 38 }, { month: 'Oct', sales: 30 },
+          { month: 'Nov', sales: 25 }, { month: 'Dec', sales: 32 }
+      ];
+      this.primaryxAxis = { valueType: 'Category' };
+  }
+  clickHandler() {
+      this.chartInstance.print();
+  }
+  render() {
+    return (<div>
+      <ChartComponent id='charts' ref={chart => this.chartInstance = chart} primaryXAxis={this.primaryxAxis}>
+      <Inject services={[ColumnSeries, Legend, Tooltip, DataLabel, LineSeries, Category]}/>
+      <SeriesCollectionDirective>
+        <SeriesDirective dataSource={this.data} xName='month' yName='sales' type='Column' name='Sales'>
+        </SeriesDirective>
+      </SeriesCollectionDirective>
+    </ChartComponent></div>);
+  }
+};
+
+function Line() {
+      const data = [
+          { month: 'Jan', sales: 35 }, { month: 'Feb', sales: 28 },
+          { month: 'Mar', sales: 34 }, { month: 'Apr', sales: 32 },
+          { month: 'May', sales: 40 }, { month: 'Jun', sales: 32 },
+          { month: 'Jul', sales: 35 }, { month: 'Aug', sales: 55 },
+          { month: 'Sep', sales: 38 }, { month: 'Oct', sales: 30 },
+          { month: 'Nov', sales: 25 }, { month: 'Dec', sales: 32 }
+      ];
+      const primaryxAxis = { valueType: 'Category' };
+      return (
+        <div>
+        <ChartComponent id="charts" primaryXAxis={primaryxAxis}>
+    <Inject services={[ColumnSeries, Tooltip, LineSeries, Category]}/>
+    <SeriesCollectionDirective>
+    <SeriesDirective dataSource={data} xName='month' yName='sales' name='Sales'/>
+    </SeriesCollectionDirective>
+    </ChartComponent></div>);
+};
 
 function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
@@ -149,7 +198,8 @@ const Analytics = () => {
   return (
     <>
       {!loading && <div style={{margin:'2em', fontSize:'larger'}}>We are fetching your data... </div>}
-      {loading && "Display Charts Here..."}
+      {loading && <Bar/>}
+      {loading && <Line/>}
     </>
   )
 }
@@ -354,7 +404,7 @@ const Profile = (props) => {
         </MDBRow>
 
 				<MDBRow>
-          <MDBCol lg="12">
+          <MDBCol lg="16">
             <MDBCard className="mb-5">
               <Typography
                 variant="h4"
@@ -371,8 +421,8 @@ const Profile = (props) => {
         </MDBRow>
 
         <MDBRow>
-          <MDBCol lg="12">
-            <MDBCard className="mb-5">
+          <MDBCol lg="16">
+            <MDBCard className="mb-4">
               <Typography
                 variant="h4"
                 component="h4"
@@ -380,14 +430,50 @@ const Profile = (props) => {
                 sx={{ color: "black" }}
                 pt={3}
               >
-                Analytics
+                Topic Wise Score
               </Typography>
-              <Analytics />
+              <Bar/>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+
+        <MDBRow>
+          <MDBCol lg="16">
+            <MDBCard className="mb-3">
+              <Typography
+                variant="h4"
+                component="h4"
+                textAlign="center"
+                sx={{ color: "black" }}
+                pt={3}
+              >
+                Performance
+              </Typography>
+              <Line/>
             </MDBCard>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
-			<ToastContainer/>
+
+      {/* <MDBContainer className="py-5">
+      <MDBRow>
+          <MDBCol lg="20">
+            <MDBCard className="mb-7">
+              <Typography
+                variant="h4"
+                component="h4"
+                textAlign="center"
+                sx={{ color: "black" }}
+                pt={3}
+              >
+                Performance
+              </Typography>
+            <Bar/>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+			<ToastContainer/> */}
     </section>
   );
 };
