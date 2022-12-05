@@ -181,7 +181,7 @@ const Main = ({ startQuiz }) => {
                   value={category}
                   onChange={(e, { value }) => setCategory(value)}
                   disabled={processing}
-                  multiple
+                  
                 />
                 <br />
                 <Dropdown

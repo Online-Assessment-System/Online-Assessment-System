@@ -135,9 +135,6 @@ function Bar(props) {
       dataPoints: [
         { y:  performanceData["Linux"][1], label: "Linux" },
         { y:  performanceData["DevOps"][1], label: "DevOps" },
-        { y:  performanceData["Networking"][1], label: "Networking" },
-        { y:  performanceData["Programming"][1], label: "Programming" },
-        { y:  performanceData["Cloud"][1], label: "Cloud" },
         { y:  performanceData["PHP"][1], label: "PHP" },
         { y:  performanceData["random"][1], label: "Random" }
       ]
@@ -197,10 +194,6 @@ function Pie(props){
       indexLabelPlacement: "inside",
       dataPoints: [
         { y:  performanceData["Linux"][1], label: "Linux" },
-        { y:  performanceData["DevOps"][1], label: "DevOps" },
-        { y:  performanceData["Networking"][1], label: "Networking" },
-        { y:  performanceData["Programming"][1], label: "Programming" },
-        { y:  performanceData["Cloud"][1], label: "Cloud" },
         { y:  performanceData["PHP"][1], label: "PHP" },
         { y:  performanceData["random"][1], label: "Random" }
       ]
