@@ -143,11 +143,19 @@ const visualizer = async (req, res) => {
       }
       performanceData[categories[index]] = [correctAnswers, totalQuestions];
     }
+    let categoryData = [];
+    for(let id = 0; id < user.quiz.length; id++){
+      if(user.quiz[id].category===undefined || user.quiz[id].category==='' || user.quiz[id].category==="random")
+        categoryData.push("Random")
+      else    
+        categoryData.push(user.quiz[id].category);
+    }
     return res.status(req.status).json({
       'message' : req.message,
       'accuracy' : accuracyData,
       'performanceData': performanceData,
       'speedData': speedData,
+      'categoryData': categoryData,
     })
   }catch(err){
     return res.status(req.status).json({

@@ -24,7 +24,6 @@ const Result = ({
     if(saved || saveDone){
       return;
     }
-    console.log("In Result",category);
     const res = await fetch(SERVER_URL + "/api/quiz/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

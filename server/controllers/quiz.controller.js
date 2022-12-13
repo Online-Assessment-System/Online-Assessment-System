@@ -11,7 +11,8 @@ const practice = async (req, res) => {
     })
   }
   try {
-    const tag = req.body.tag;
+    const options = ["Linux", "DevOps", "PHP"];
+    const tag = ((req.body.tag==="random")?options[Math.floor(Math.random() * 3)] :req.body.tag);
     const difficulty = req.body.difficulty;
     const limit = req.body.limit;
 

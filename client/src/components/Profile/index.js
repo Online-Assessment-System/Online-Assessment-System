@@ -34,6 +34,7 @@ let quizData = [];
 const columns = [
   { id: "no", label: 'No.'}, 
   { id: 'title', label: 'Title' },
+  { id: 'category',label: 'Category'},
   { id: 'score', label: 'Score' },
   { id: 'date', label: 'Date' },
   { id: 'review', label: 'Review' },
@@ -132,11 +133,12 @@ function Bar(props) {
     axisY: { title: "Questions Attempted", includeZero: true},
     data: [{
       type: "bar",
+      toolTipContent: `Accuracy : {z}%`,
       dataPoints: [
-        { y:  performanceData["Linux"][1], label: "Linux" },
-        { y:  performanceData["DevOps"][1], label: "DevOps" },
-        { y:  performanceData["PHP"][1], label: "PHP" },
-        { y:  performanceData["random"][1], label: "Random" }
+        { y:  performanceData["Linux"][1],z:performanceData["Linux"][0]/performanceData["Linux"][1]*100, label: "Linux" },
+        { y:  performanceData["DevOps"][1],z:performanceData["DevOps"][0]/performanceData["DevOps"][1]*100, label: "DevOps" },
+        { y:  performanceData["PHP"][1],z:performanceData["PHP"][0]/performanceData["PHP"][1]*100, label: "PHP" },
+        { y:  performanceData["random"][1],z:performanceData["random"][0]/performanceData["random"][1]*100, label: "Random" }
       ]
     }]
   }
@@ -148,10 +150,13 @@ function Bar(props) {
 
 function Area(props){
   const speedData = props.chartData["speedData"];
+  const categoryData = props.chartData["categoryData"];
+  
   const data_acc=[];
   var cur=1;
   speedData.forEach(function(ele) {
     let temp={
+        z:categoryData[cur-1], 
         y:ele[0]/1000,
         x:cur,
     }
@@ -167,7 +172,7 @@ function Area(props){
 		axisX: { title: "Quiz", interval:1},
 		data: [{
       type: "splineArea",
-			toolTipContent: "Quiz {x}: {y}sec",
+			toolTipContent: `Category : {z} <br/>Quiz {x}: {y}sec`,
 			dataPoints: data_acc
 		}]
   }
@@ -195,6 +200,7 @@ function Pie(props){
       dataPoints: [
         { y:  performanceData["Linux"][1], label: "Linux" },
         { y:  performanceData["PHP"][1], label: "PHP" },
+        { y:  performanceData["DevOps"][1], label: "DevOps" },
         { y:  performanceData["random"][1], label: "Random" }
       ]
     }]
@@ -308,12 +314,18 @@ const Profile = (props) => {
   const propogateRows = () => {
     rows = [];
     for(let id = 0; id < quizData.length; id++){
+      let tag='';
+      if(quizData[id].category===undefined || quizData[id].category==='' || quizData[id].category==="random")
+        tag = "Random"
+      else    
+        tag = quizData[id].category;
       const timeStamp = Date.parse(quizData[id].time);
       const date= new Date(timeStamp);
       const dateFormat = date.getHours() + ":" + date.getMinutes() + ", "+ date.toDateString();
       const row = {
         'no' : id + 1,
         'title': 'Practice Quiz',
+        'category': tag,
         'score': quizData[id].correctAnswers + "/" + quizData[id].totalQuestions, 
         'date' : dateFormat, 
         'review':  <Button variant="outlined" size="small" onClick={handleReview} value={id}> Review </Button>

@@ -50,7 +50,7 @@ userSchema.methods.updataDetails = async function (user){
 userSchema.methods.addQuiz = async function (quiz){
   try{
     const quizData = {
-      category : quiz.category[0],
+      category : quiz.category,
       totalQuestions : Number(quiz.totalQuestions),
       correctAnswers : Number(quiz.correctAnswers),
       timeTaken : Number(quiz.timeTaken),

@@ -21,7 +21,7 @@ import {
 } from "semantic-ui-react";
 
 const Main = ({ startQuiz }) => {
-  const [category, setCategory] = useState([]);
+  const [category, setCategory] = useState("");
   const [numOfQuestions, setNumOfQuestions] = useState();
   const [difficulty, setDifficulty] = useState();
   const [countdownTime, setCountdownTime] = useState({

@@ -9,25 +9,15 @@ const CATEGORIES = [
     text: "DevOps",
     value: "DevOps",
   },
-  // {
-  //   key: 11,
-  //   text: "Networking",
-  //   value: "Networking",
-  // },
-  // {
-  //   key: 12,
-  //   text: "Programming",
-  //   value: "Programming",
-  // },
-  // {
-  //   key: 13,
-  //   text: "Cloud",
-  //   value: "Cloud",
-  // },
   {
-    key: 14,
+    key: 11,
     text: "PHP",
     value: "PHP",
+  },
+  {
+    key: 12,
+    text : "Random",
+    value : "random",
   },
 ];
 
