@@ -12,7 +12,7 @@ const app = express();
 // CORS
 app.use(
   cors({
-    origin: "https://online-assessment-system.onrender.com/",     // Allow to server to accept request from different origin.
+    origin: "https://online-assessment-system.onrender.com",     // Allow to server to accept request from different origin.
     methods: "*",           // Allow every method coming from client url
     credentials: true,      // Allow cookies from browser to pass through.
   })
